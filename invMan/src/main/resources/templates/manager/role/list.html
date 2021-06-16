@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head">
+</head>
+<body>
+	<div class="container text-center" th:replace="fragments :: header">
+		
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-2" th:replace="fragments :: left_menu">
+			</div>
+			<div class="col-10">
+				
+				<h3>Role (List All)</h3>
+				
+				<div class="alert alert-warning" role="alert" th:text="${message}" th:if="${message != null }"></div>
+				
+				<table class="table">
+				
+					<thead>
+						<th th:text="#{role.id}"></th>
+						<th th:text="#{role.code}" style="width: 100px;"></th>
+						<th th:text="#{role.description}"></th>
+						<th style="width: 15px;"></th>
+						<th style="width: 15px;"></th>
+					</thead>
+					
+					<tbody>
+						<tr th:each="ob : ${listRole}">
+        					<td th:text="${ob.id}"></td>
+        					<td th:text="${ob.code}"></td>
+        					<td th:text="${ob.description}"></td>
+        					<td>
+        						<a class="nav-link" th:href="@{/manager/role/update/{orderId}(orderId=${ob.id})}">
+						          	<img th:src="@{/images/bootstrap-icons/pencil-square.svg}" alt="Update"/>
+						        </a>
+        					</td>
+        					<td>
+		        				<a class="nav-link" th:href="@{/manager/role/delete/{orderId}(orderId=${ob.id})}">
+						          	<img th:src="@{/images/bootstrap-icons/trash-fill.svg}" alt="Delete"/>
+						        </a>
+        					</td>
+						</tr>
+					</tbody>
+					
+					<tfoot>
+						<tr th:if="${totalPages > 0}">
+							<td colspan="5" class="text-center">
+								<nav aria-label="Page navigation example">
+  									<ul class="pagination">
+  										<li class="page-item" th:if="${!firstPage}"><a class="page-link" th:href="@{/manager/role/list}">First</a></li>
+    									<li class="page-item" th:if="${!firstPage}"><a class="page-link" th:href="@{/manager/role/list/previous}">Previous</a></li>
+    									<li class="page-item"><span th:text="${currentPage}"/> ... of ... <span th:text="${totalPages}"/></li>
+    									<li class="page-item" th:if="${!lastPage}"><a class="page-link" href="@{/manager/role/list/next}">Next</a></li>
+    									<li class="page-item" th:if="${!lastPage}"><a class="page-link" href="@{/manager/role/list/last}">Last</a></li>
+ 	 								</ul>
+								</nav>
+							</td>
+						</tr>
+						<tr th:if="${totalPages == 0}">
+							<td colspan="5" class="text-left">
+								0 records.
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container" th:replace="fragments :: footer">
+	</div>
+</body>
+</html>

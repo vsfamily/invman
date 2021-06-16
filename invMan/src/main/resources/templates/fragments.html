@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html_head">
+	<meta charset="ISO-8859-1">
+	<title>InvMan (Inventory Management)</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+	<div class="container" th:fragment="header">
+		<div class="row" style="padding-bottom: 5px; padding-top: 5px;">
+			<div class="col-4">
+				<img th:src="@{/images/invman.png}"/ height="60px;">
+			</div>
+			<div class="col-8 text-end">
+				<h5 th:text="#{header}"></h5>
+				<h7 th:text="#{sub-header}"></h7>
+			</div>
+		</div>
+		<div class="row" style="padding-bottom: 5px;">
+			<div class="col-12">
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">
+					<div class="container-fluid">
+				    	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				      		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				      			<li class="nav-item">
+				          			<a class="nav-link" th:classappend="${viewLeftMenu == 'index'} ? active" th:href="@{/}">
+				          				<img th:src="@{/images/bootstrap-icons/house-fill.svg}" height="20px;"/>
+				          				Home
+				          			</a>
+				        		</li>
+				        		<li class="nav-item" sec:authorize="hasAnyRole('MANAGER','USER')">
+				          			<a class="nav-link" th:classappend="${viewLeftMenu == 'home'} ? active" th:href="@{/home}">
+				          				<img th:src="@{/images/bootstrap-icons/sun-fill.svg}" height="20px;"/>
+				          				My Dashboard
+				          			</a>
+				        		</li>
+				      			<li class="nav-item" sec:authorize="hasAnyRole('MANAGER','REPORT')">
+				          			<a class="nav-link" th:classappend="${viewLeftMenu == 'report'} ? active" th:href="@{/report}">
+				          				<img th:src="@{/images/bootstrap-icons/briefcase-fill.svg}" height="20px;"/>
+				          				Reporting
+				          			</a>
+				        		</li>
+				      			<li class="nav-item" sec:authorize="hasAnyRole('MANAGER','SETUP')">
+				          			<a class="nav-link" th:classappend="${viewLeftMenu == 'setup'} ? active" th:href="@{/setup}">
+				          				<img th:src="@{/images/bootstrap-icons/gear-fill.svg}" height="20px;"/>
+				          				Setup
+				          			</a>
+				        		</li>
+				      			<li class="nav-item" sec:authorize="hasRole('MANAGER')">
+				          			<a class="nav-link" th:classappend="${viewLeftMenu == 'manager'} ? active" th:href="@{/manager}">
+				          				<img th:src="@{/images/bootstrap-icons/people-fill.svg}" height="20px;"/>
+				          				Manager
+				          			</a>
+				        		</li>
+				      			<li class="nav-item" sec:authorize="!isAuthenticated()">
+				          			<a class="nav-link" th:href="@{/login}">
+				          				<img th:src="@{/images/bootstrap-icons/lock-fill.svg}" height="20px;"/>
+				          				Sign-In
+				          			</a>
+				        		</li>
+				      			<li class="nav-item" sec:authorize="isAuthenticated()">
+				          			<a class="nav-link" th:href="@{/logout}">
+				          				<img th:src="@{/images/bootstrap-icons/unlock-fill.svg}" height="20px;"/>
+				          				Sign-Out
+				          			</a>
+				        		</li>
+				      		</ul>
+				    	</div>
+				  	</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+	
+		<div class="row">
+		
+			<div class="col-2" th:fragment="left_menu">
+				
+				<nav class="navbar">
+					
+					<ul class="nav flex-column" th:if="${viewLeftMenu == 'index' }">
+						<li class="nav-item">
+					    	<a class="nav-link" href="/contacts">Contacts</a>
+					  	</li>
+					  	<li class="nav-item">
+					    	<a class="nav-link" href="/help">Help Documents</a>
+					  	</li>
+					</ul>
+					
+					<ul class="nav flex-column" th:if="${viewLeftMenu == 'home' }">
+					  	<li class="nav-item">
+					    	<a class="nav-link" href="/home/profile">My Profile</a>
+					  	</li>
+					  	<li class="nav-item">
+					    	<a class="nav-link" href="/home/changePassword">Change Password</a>
+					  	</li>
+					</ul>
+					
+					<ul class="nav flex-column" th:if="${viewLeftMenu == 'report' }">
+					  
+					</ul>
+					
+					<ul class="nav flex-column" th:if="${viewLeftMenu == 'setup' }">
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownCity" role="button" data-bs-toggle="dropdown" href="#">City</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownCity">
+				            	<li><a class="dropdown-item" th:href="@{/setup/city/addNew}">City (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/setup/city/list}">City (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownCountry" role="button" data-bs-toggle="dropdown" href="#">Country</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownCountry">
+				            	<li><a class="dropdown-item" th:href="@{/setup/country/addNew}">Country (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/setup/country/list}">Country (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownDesignation" role="button" data-bs-toggle="dropdown" href="#">Designation</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownDesignation">
+				            	<li><a class="dropdown-item" th:href="@{/setup/designation/addNew}">Designation (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/setup/designation/list}">Designation (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownOrganization" role="button" data-bs-toggle="dropdown" href="#">Organization</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownOrganization">
+				            	<li><a class="dropdown-item" th:href="@{/setup/organization/addNew}">Organization (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/setup/organization/list}">Organization (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownOrganization" role="button" data-bs-toggle="dropdown" href="#">Organization</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownOrganization">
+				            	<li><a class="dropdown-item" th:href="@{/setup/organization/addNew}">Organization (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/setup/organization/list}">Organization (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownOrganizationUnit" role="button" data-bs-toggle="dropdown" href="#">Organization Unit</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownOrganizationUnit">
+				            	<li><a class="dropdown-item" th:href="@{/setup/organizationUnit/addNew}">Organization Unit (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/setup/organizationUnit/list}">Organization Unit (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownOrganizationUnitType" role="button" data-bs-toggle="dropdown" href="#">Organization Unit Type</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownOrganizationUnitType">
+				            	<li><a class="dropdown-item" th:href="@{/setup/organizationUnitType/addNew}">Organization Unit Type (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/setup/organizationUnitType/list}">Organization Unit Type (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item">
+					    	<a class="nav-link" th:href="@{/setup/parameters}">Parameters</a>
+					  	</li>
+					  	<li class="nav-item">
+					    	<a class="nav-link" th:href="@{/setup/salutation/addNew}">Salutation</a>
+					  	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownState" role="button" data-bs-toggle="dropdown" href="#">State</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownState">
+				            	<li><a class="dropdown-item" th:href="@{/setup/state/addNew}">State (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/setup/state/list}">State (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item">
+					    	<a class="nav-link" href="/setup/state/addNew">State</a>
+					  	</li>
+					</ul>
+					
+					<ul class="nav flex-column" th:if="${viewLeftMenu == 'manager' }">
+					  	<li class="nav-item">
+					    	<a class="nav-link" href="/manager/user/search">Search User</a>
+					  	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" href="#">User</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+				            	<li><a class="dropdown-item" th:href="@{/manager/user/addNew}">User (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/manager/user/list}">User (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownGroup" role="button" data-bs-toggle="dropdown" href="#">Group</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownGroup">
+				            	<li><a class="dropdown-item" th:href="@{/manager/group/addNew}">Group (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/manager/group/list}">Group (List All)</a></li>
+				          	</ul>
+					 	</li>
+					  	<li class="nav-item dropdown">
+					    	<a class="nav-link dropdown-submenu dropdown-toggle" id="navbarDropdownRole" role="button" data-bs-toggle="dropdown" href="#">Role</a>
+					    	
+				          	<ul class="dropdown-menu" aria-labelledby="navbarDropdownRole">
+				            	<li><a class="dropdown-item" th:href="@{/manager/role/addNew}">Role (Add New)</a></li>
+				            	<li><a class="dropdown-item" th:href="@{/manager/role/list}">Role (List All)</a></li>
+				          	</ul>
+					 	</li>
+					</ul>
+				</nav>
+			</div>
+			
+			<div class="col-10">
+				
+				<h3>Title</h3>
+				
+				<div class="alert alert-warning" role="alert" th:text="${message}" th:if="${message != null }"></div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<div class="container text-center" th:fragment="footer">
+		<img th:src="@{/images/bottom-border-2.png}"/>
+		<br/><p th:text="#{copyright}"></p>	
+	
+		<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	</div>
+
+</body>
+</html>
