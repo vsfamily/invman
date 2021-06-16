@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head">
+</head>
+<body>
+	<div class="container text-center" th:replace="fragments :: header">
+		
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-2" th:replace="fragments :: left_menu">
+			</div>
+			
+			<div class="col-10">
+			
+				<h3>User Add Form</h3>
+				
+				<div class="alert alert-warning" role="alert" th:text="${message}" th:if="${message != null }"></div>
+				
+				<form th:action="@{/manager/user/addNew}" th:object="${user}" method="POST">
+				
+					<div class="form-group row">
+				    	<label class="col-3 col-form-label" th:text="#{user.uid}" />
+				    	<div class="col-6">
+				      		<input type="text" class="form-control" th:field="*{uid}" th:placeholder="#{user.uid}">
+				      		<ul><li th:errors="*{uid}" /></ul>
+				    	</div>
+					</div>
+				  	
+				  	<div class="form-group row">
+				    	<label class="col-3 col-form-label" th:text="#{user.fullName}" />
+				    	<div class="col-6">
+				      		<input type="text" class="form-control" th:field="*{fullName}" th:placeholder="#{user.fullName}">
+				      		<ul><li th:errors="*{fullName}" /></ul>
+				    	</div>
+					</div>
+					
+				  	<div class="form-group row">
+				    	<label class="col-3 col-form-label" th:text="#{user.password}" />
+				    	<div class="col-6">
+				      		<input type="password" class="form-control" th:field="*{password}" th:placeholder="#{user.password}">
+				      		<ul><li th:errors="*{password}" /></ul>
+				    	</div>
+				  	</div>
+					
+				  	<div class="form-group row">
+				    	<label class="col-3 col-form-label" th:text="#{user.retypePassword}" />
+				    	<div class="col-6">
+				      		<input type="password" class="form-control" th:field="*{retypePassword}" th:placeholder="#{user.retypePassword}">
+				      		<ul><li th:errors="*{retypePassword}" /></ul>
+				    	</div>
+				  	</div>
+				  	
+				  	<div class="form-group row">
+				    	<label class="col-3 col-form-label" th:text="#{user.accountNonExpired}" />
+				    	<div class="col-6">
+				      		<select class="form-select" th:field="*{accountNonExpired}">
+					            <option th:each="p : ${listYesNo}" th:value="${p.value}" th:text="${p.label}" />
+					        </select>
+					        <ul><li th:errors="*{accountNonExpired}" /></ul>
+				    	</div>
+					</div>
+				  	
+				  	<div class="form-group row">
+				    	<label class="col-3 col-form-label" th:text="#{user.accountNonLocked}" />
+				    	<div class="col-6">
+				      		<select class="form-select" th:field="*{accountNonLocked}">
+					            <option th:each="p : ${listYesNo}" th:value="${p.value}" th:text="${p.label}" />
+					        </select>
+					        <ul><li th:errors="*{accountNonLocked}" /></ul>
+				    	</div>
+					</div>
+				  	
+				  	<div class="form-group row">
+				    	<label class="col-3 col-form-label" th:text="#{user.credentialsNonExpired}" />
+				    	<div class="col-6">
+				      		<select class="form-select" th:field="*{credentialsNonExpired}">
+					            <option th:each="p : ${listYesNo}" th:value="${p.value}" th:text="${p.label}" />
+					        </select>
+					        <ul><li th:errors="*{credentialsNonExpired}" /></ul>
+				    	</div>
+					</div>
+				  	
+				  	<div class="form-group row">
+				    	<label class="col-3 col-form-label" th:text="#{user.enabled}" />
+				    	<div class="col-6">
+				      		<select class="form-select" th:field="*{enabled}">
+					            <option th:each="p : ${listYesNo}" th:value="${p.value}" th:text="${p.label}" />
+					        </select>
+					        <ul><li th:errors="*{enabled}" /></ul>
+				    	</div>
+					</div>
+				  	
+				  	<div class="form-group row">
+				    	<div class="col-9">
+				      		<button type="submit" class="btn btn-primary">Submit</button>
+				    	</div>
+				  	</div>
+				  	
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container" th:replace="fragments :: footer">
+	</div>
+</body>
+</html>

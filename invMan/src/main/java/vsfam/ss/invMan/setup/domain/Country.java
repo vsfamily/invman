@@ -81,4 +81,8 @@ public class Country implements Serializable {
 	public String getAuditString() {
 		return this.toString();
 	}
+	
+	public String getLabel() {
+		return this.getName() + "[" + this.getCode() + "]";
+	}
 }

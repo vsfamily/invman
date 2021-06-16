@@ -96,5 +96,9 @@ public class State implements Serializable {
 	public String getAuditString() {
 		return this.toString();
 	}
+
+	public String getLabel() {
+		return this.getName() + "[" + this.getCode() + "]" + " / " + this.getCountry().getLabel();
+	}
 	
 }

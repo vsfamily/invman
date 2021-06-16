@@ -21,8 +21,8 @@
 				
 					<thead>
 						<th th:text="#{user.id}"></th>
-						<th th:text="#{user.uid}" style="width: 100px;"></th>
-						<th th:text="#{user.fullName}" style="width: 200px;"></th>
+						<th th:text="#{user.uid}"></th>
+						<th th:text="#{user.fullName}"></th>
 						<th th:text="#{user.accountNonLocked}"></th>
 						<th th:text="#{user.accountNonExpired}"></th>
 						<th th:text="#{user.credentialsNonExpired}"></th>
@@ -35,8 +35,8 @@
 					<tbody>
 						<tr th:each="ob : ${listUser}">
         					<td th:text="${ob.id}"></td>
-        					<td th:text="${ob.uid}"></td>
-        					<td th:text="${ob.fullName}"></td>
+        					<td th:text="${ob.uid}" style="width: 100px;"></td>
+        					<td th:text="${ob.fullName}" style="width: 200px;"></td>
         					<td th:text="${ob.accountNonLocked}"></td>
         					<td th:text="${ob.accountNonExpired}"></td>
         					<td th:text="${ob.credentialsNonExpired}"></td>
